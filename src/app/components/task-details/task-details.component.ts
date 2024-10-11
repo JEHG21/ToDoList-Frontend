@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';  
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
 import { CommonModule } from '@angular/common';
@@ -7,11 +7,12 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, MatIconModule], 
+  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.css']
 })
@@ -20,7 +21,9 @@ export class TaskDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private authService: AuthService,  
+    private router: Router            
   ) {}
 
   ngOnInit(): void {
@@ -37,5 +40,10 @@ export class TaskDetailsComponent implements OnInit {
         console.error('Error retrieving task:', error);
       }
     );
+  }
+
+  logout() {
+    this.authService.logout();  
+    this.router.navigate(['/login']);  
   }
 }

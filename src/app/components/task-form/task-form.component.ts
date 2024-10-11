@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
-import { Router, ActivatedRoute } from '@angular/router'; 
+import { Router, ActivatedRoute } from '@angular/router';
 import { Task } from '../../models/task';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';  
-import { MatInputModule } from '@angular/material/input'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; 
 
 import flatpickr from 'flatpickr';
 
@@ -19,18 +20,19 @@ import flatpickr from 'flatpickr';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    MatTableModule, 
-    MatInputModule, 
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    RouterModule],  
+    RouterModule
+  ],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css'],
 })
-export class TaskFormComponent implements OnInit {  
+export class TaskFormComponent implements OnInit {
   task: Task = {
     taskId: 0,
     title: '',
@@ -42,20 +44,21 @@ export class TaskFormComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private taskService: TaskService, 
+    private taskService: TaskService,
     private router: Router,
-    private route: ActivatedRoute  
+    private route: ActivatedRoute,
+    private authService: AuthService 
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');  
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.isEditMode = true;  
-      this.getTaskById(+id); 
+      this.isEditMode = true;
+      this.getTaskById(+id);
     } else {
       this.initializeFlatpickr();
     }
-  }    
+  }
 
   getTaskById(id: number): void {
     this.taskService.getTask(id).subscribe(
@@ -67,7 +70,7 @@ export class TaskFormComponent implements OnInit {
           const day = date.getDate().toString().padStart(2, '0');
           this.task.dueDate = `${year}-${month}-${day}`;
         }
-        
+
         this.task.taskId = task.taskId;
         this.task.title = task.title;
         this.task.description = task.description;
@@ -84,39 +87,42 @@ export class TaskFormComponent implements OnInit {
   initializeFlatpickr(): void {
     flatpickr('#dueDateInput', {
       dateFormat: 'Y-m-d',
-      defaultDate: this.task.dueDate, 
+      defaultDate: this.task.dueDate,
       onChange: (selectedDates, dateStr) => {
         this.task.dueDate = dateStr;
       },
     });
   }
-  
+
   onSubmit(taskForm: any): void {
     if (taskForm.invalid) {
       taskForm.form.markAllAsTouched();
       return;
     }
-  
+
     if (this.isEditMode) {
-      this.updateTask();  
+      this.updateTask();
     } else {
-      this.createTask();  
+      this.createTask();
     }
   }
 
-  //CreateTask
   createTask(): void {
     this.taskService.createTask(this.task).subscribe(() => {
       console.log('Task successfully added');
-      this.router.navigate(['/']);  
+      this.router.navigate(['/']);
     });
   }
 
-  //UpdateTask
   updateTask(): void {
     this.taskService.updateTask(this.task.taskId, this.task).subscribe(() => {
       console.log('Task successfully updated');
-      this.router.navigate(['/']);  
+      this.router.navigate(['/']);
     });
+  }
+
+  logout() {
+    this.authService.logout();  
+    this.router.navigate(['/login']);  
   }
 }

@@ -4,14 +4,18 @@
   <button mat-raised-button color="primary" class="add-task-button" [routerLink]="['/add-task']">
     <mat-icon>add</mat-icon> Add Task
   </button>
+
+  <button mat-raised-button color="warn" class="logout-button" (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
 </div>
 
 <!-- Search Field -->
 <div class="search-container">
-<mat-form-field appearance="fill" class="wide-search-field">
-  <mat-label>Search Tasks</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Search by title or description" />
-</mat-form-field>
+  <mat-form-field appearance="fill" class="wide-search-field">
+    <mat-label>Search Tasks</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search by title or description" />
+  </mat-form-field>
 </div>
 
 <table mat-table [dataSource]="filteredTasks" class="mat-elevation-z8">

@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input'; 
+import { AuthService } from '../../services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -25,7 +27,7 @@ export class TaskListComponent implements OnInit {
   displayedColumns: string[] = ['title', 'description', 'dueDate', 'isCompleted', 'actions'];
   loading: boolean = false;
 
-  constructor(private taskService: TaskService, public dialog: MatDialog) { }
+  constructor(private taskService: TaskService, public dialog: MatDialog, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.getTasks();
@@ -69,5 +71,10 @@ export class TaskListComponent implements OnInit {
         });
       }
     });
+  }
+
+  logout() {
+    this.authService.logout();  
+    this.router.navigate(['/login']);
   }
 }

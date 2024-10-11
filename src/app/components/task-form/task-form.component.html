@@ -1,5 +1,9 @@
 <div class="task-form-header">
   <h2>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</h2>
+
+  <button mat-raised-button color="warn" class="logout-button" (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
 </div>
 
 <form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)" class="task-form">
@@ -22,7 +26,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Due Date</mat-label>
-    <input matInput id="dueDateInput" name="dueDate" required/>
+    <input matInput id="dueDateInput" name="dueDate" required />
   </mat-form-field>
 
   <mat-checkbox [(ngModel)]="task.isCompleted" name="isCompleted">Completed</mat-checkbox>
