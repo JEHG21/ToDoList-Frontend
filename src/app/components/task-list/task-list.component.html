@@ -1,39 +1,53 @@
-<h2>Task List</h2>
+<div class="task-header">
+  <h2>To-Do Task List</h2>
+  
+  <button mat-raised-button color="primary" class="add-task-button" [routerLink]="['/add-task']">
+    <mat-icon>add</mat-icon> Add Task
+  </button>
+</div>
 
-<button [routerLink]="['/add-task']">Add Task</button>
+<table mat-table [dataSource]="tasks" class="mat-elevation-z8">
+  <!-- Title Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Title </th>
+    <td mat-cell *matCellDef="let task" class="mat-row"> {{ task.title }} </td>
+  </ng-container>
 
-<div *ngIf="loading">
-    <p>Loading tasks...</p>
-  </div>
-  
-  <div *ngIf="!loading && tasks.length === 0">
-    <p>No tasks available.</p>
-  </div>
-  
-  <div *ngIf="!loading && tasks.length > 0">
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Due Date</th>
-          <th>Completed</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let task of tasks">
-          <td>{{ task.title }}</td>
-          <td>{{ task.description }}</td>
-          <td>{{ task.dueDate | date:'short' }}</td>
-          <td>{{ task.isCompleted ? 'Yes' : 'No' }}</td>
-          <td>
-            <button [routerLink]="['/edit-task', task.taskId]">Edit</button>
-            <button [routerLink]="['/task', task.taskId]">Details</button>
-            <button (click)="deleteTask(task.taskId)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Description </th>
+    <td mat-cell *matCellDef="let task" class="mat-row"> {{ task.description }} </td>
+  </ng-container>
+
+  <!-- Due Date Column -->
+  <ng-container matColumnDef="dueDate">
+    <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Due Date </th>
+    <td mat-cell *matCellDef="let task" class="mat-row"> {{ task.dueDate | date:'shortDate' }} </td>
+  </ng-container>
+
+  <!-- Completed Column -->
+  <ng-container matColumnDef="isCompleted">
+    <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Completed </th>
+    <td mat-cell *matCellDef="let task" class="mat-row"> {{ task.isCompleted ? 'Yes' : 'No' }} </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Actions </th>
+    <td mat-cell *matCellDef="let task" class="mat-row">
+      <button mat-raised-button color="primary" class="button-space" [routerLink]="['/edit-task', task.taskId]">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+      <button mat-raised-button color="accent" class="button-space" [routerLink]="['/task', task.taskId]">
+        <mat-icon>visibility</mat-icon> Details
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteTask(task.taskId)">
+        <mat-icon>delete</mat-icon> Delete
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Header and Row definition -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

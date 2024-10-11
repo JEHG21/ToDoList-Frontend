@@ -3,17 +3,21 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatTableModule, MatIconModule, MatButtonModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
   providers: []
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
+  displayedColumns: string[] = ['title', 'description', 'dueDate', 'isCompleted', 'actions'];
   loading: boolean = false;
 
   constructor(private taskService: TaskService) { }
