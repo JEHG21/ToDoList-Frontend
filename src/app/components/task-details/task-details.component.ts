@@ -1,12 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../models/task';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule], 
   templateUrl: './task-details.component.html',
-  styleUrl: './task-details.component.css'
+  styleUrls: ['./task-details.component.css']
 })
-export class TaskDetailsComponent {
+export class TaskDetailsComponent implements OnInit {
+  task: Task | undefined;
 
+  constructor(
+    private route: ActivatedRoute,
+    private taskService: TaskService
+  ) {}
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.getTaskById(id);
+  }
+
+  getTaskById(id: number): void {
+    this.taskService.getTask(id).subscribe(
+      (task) => {
+        this.task = task;
+      },
+      (error) => {
+        console.error('Error retrieving task:', error);
+      }
+    );
+  }
 }

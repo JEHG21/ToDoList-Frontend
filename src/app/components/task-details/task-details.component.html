@@ -1,1 +1,10 @@
-<p>task-details works!</p>
+<h2>Task Details</h2>
+
+<div *ngIf="task">
+  <p><strong>Title:</strong> {{ task?.title }}</p>
+  <p><strong>Description:</strong> {{ task?.description }}</p>
+  <p><strong>Due Date:</strong> {{ task?.dueDate | date:'shortDate' }}</p>
+  <p><strong>Completed:</strong> {{ task?.isCompleted ? 'Yes' : 'No' }}</p>
+</div>
+
+<button [routerLink]="['/']">Back to Task List</button>
