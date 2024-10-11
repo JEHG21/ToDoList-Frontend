@@ -1,0 +1,62 @@
+.login-container, .register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(90deg, #2196f3 0%, #9c27b0 100%);
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+.login-header h2, .register-header h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+button[type="submit"], .register-button {
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+button[type="submit"] mat-icon, .register-button mat-icon {
+  margin-right: 8px;
+}
+
+.register-button {
+  background-color: #ff9800 !important; 
+  color: white !important; 
+}
+
+.register-button:hover {
+  background-color: #e68900 !important;
+}

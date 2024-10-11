@@ -1,0 +1,29 @@
+<div class="register-container">
+  <div class="register-header">
+    <h2>Register To-Do List App</h2>
+  </div>
+
+  <form (submit)="register()" class="register-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username" name="username" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" required>
+    </mat-form-field>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <div class="form-buttons">
+      <button mat-raised-button color="primary" type="submit" class="register-button">
+        <mat-icon>person_add</mat-icon> Register
+      </button>
+
+      <button mat-raised-button color="accent" class="back-button" [routerLink]="['/login']">
+        <mat-icon>arrow_back</mat-icon> Back to Login
+      </button>
+    </div>
+  </form>
+</div>
