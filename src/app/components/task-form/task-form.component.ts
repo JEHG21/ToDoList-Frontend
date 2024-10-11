@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'; 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import flatpickr from 'flatpickr';
 
@@ -24,7 +25,8 @@ import flatpickr from 'flatpickr';
     MatTableModule, 
     MatInputModule, 
     MatFormFieldModule,
-    MatCheckboxModule,],  
+    MatCheckboxModule,
+    RouterModule],  
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css'],
 })

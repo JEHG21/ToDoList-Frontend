@@ -1,10 +1,18 @@
-<h2>Task Details</h2>
-
-<div *ngIf="task">
-  <p><strong>Title:</strong> {{ task?.title }}</p>
-  <p><strong>Description:</strong> {{ task?.description }}</p>
-  <p><strong>Due Date:</strong> {{ task?.dueDate | date:'shortDate' }}</p>
-  <p><strong>Completed:</strong> {{ task?.isCompleted ? 'Yes' : 'No' }}</p>
+<div class="task-details-header">
+  <h2>Task Details</h2>
 </div>
 
-<button [routerLink]="['/']">Back to Task List</button>
+<mat-card class="task-details-card">
+  <mat-card-content>
+    <p><strong>Title:</strong> {{ task?.title }}</p>
+    <p><strong>Description:</strong> {{ task?.description }}</p>
+    <p><strong>Due Date:</strong> {{ task?.dueDate | date: 'shortDate' }}</p>
+    <p><strong>Completed:</strong> {{ task?.isCompleted ? 'Yes' : 'No' }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [routerLink]="['/']">
+      <mat-icon>arrow_back</mat-icon> Back to Task List
+    </button>
+  </mat-card-actions>
+</mat-card>
