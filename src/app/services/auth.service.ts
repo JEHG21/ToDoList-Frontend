@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,19 +21,29 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.post<any>(`http://localhost:5246/api/Auth/login`, { username, password })
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
+      .pipe(
+        map(user => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          return user;
+        }),
+        catchError(this.handleError) 
+      );
   }
 
   register(username: string, password: string) {
-    return this.http.post<any>(`http://localhost:5246/api/Auth/register`, { username, password });
+    return this.http.post<any>(`http://localhost:5246/api/Auth/register`, { username, password })
+      .pipe(
+        catchError(this.handleError)  
+      );
   }
 
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(error);
   }
 }
