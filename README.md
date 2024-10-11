@@ -1,27 +1,29 @@
 # ToDoListFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.10.
+## Overview
+This is the frontend for the To-Do List application, built using Angular. It provides user interfaces for user authentication, task management, and a responsive design using Angular Material.
 
-## Development server
+## Prerequisites
+Ensure you have the following installed:
+  - Node.js (version 16 or higher)
+  - Angular CLI (version 17 or higher)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Getting Started
+1. Clone the Repository
+   - First, clone the repository
 
-## Code scaffolding
+2. Navigate to the Frontend Directory
+   -  `cd ToDoList-Frontend`
+  
+3. Install Dependencies
+   - Run the following command to install the required Node.js packages:: `npm install`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+4. Run the Frontend
+   - Once the dependencies are installed, start the Angular application using::  `ng serve`
+   - The frontend should now be available at http://localhost:4200.
 
-## Build
+## Configuration
+The frontend communicates with the backend via API calls. Make sure the backend is running on http://localhost:5246 or update the API URLs accordingly in your Angular services.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Running Backend Tests
+To run unit tests, use: `ng test`
