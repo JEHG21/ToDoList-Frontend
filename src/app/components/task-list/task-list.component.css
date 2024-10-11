@@ -49,4 +49,14 @@
     background-color: #3f51b5 !important;
     color: white !important;
   }
+
+  .search-container {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    margin-bottom: 5px; 
+  }
   
+  .wide-search-field {
+    width: 500px;
+  }

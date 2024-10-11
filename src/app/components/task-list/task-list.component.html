@@ -6,7 +6,15 @@
   </button>
 </div>
 
-<table mat-table [dataSource]="tasks" class="mat-elevation-z8">
+<!-- Search Field -->
+<div class="search-container">
+<mat-form-field appearance="fill" class="wide-search-field">
+  <mat-label>Search Tasks</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search by title or description" />
+</mat-form-field>
+</div>
+
+<table mat-table [dataSource]="filteredTasks" class="mat-elevation-z8">
   <!-- Title Column -->
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Title </th>
