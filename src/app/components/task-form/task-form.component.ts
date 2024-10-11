@@ -91,7 +91,12 @@ export class TaskFormComponent implements OnInit {
     });
   }
   
-  onSubmit(): void {
+  onSubmit(taskForm: any): void {
+    if (taskForm.invalid) {
+      taskForm.form.markAllAsTouched();
+      return;
+    }
+  
     if (this.isEditMode) {
       this.updateTask();  
     } else {

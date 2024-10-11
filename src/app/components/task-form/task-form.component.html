@@ -2,21 +2,27 @@
   <h2>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</h2>
 </div>
 
-<form (ngSubmit)="onSubmit()" class="task-form">
+<form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)" class="task-form">
 
   <mat-form-field appearance="fill">
     <mat-label>Title</mat-label>
-    <input matInput [(ngModel)]="task.title" name="title" required />
+    <input matInput [(ngModel)]="task.title" name="title" required #title="ngModel" />
+    <mat-error *ngIf="title.invalid && title.touched">
+      Title is required.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="task.description" name="description" required></textarea>
+    <textarea matInput [(ngModel)]="task.description" name="description" required #description="ngModel"></textarea>
+    <mat-error *ngIf="description.invalid && description.touched">
+      Description is required.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Due Date</mat-label>
-    <input matInput id="dueDateInput" name="dueDate" required />
+    <input matInput id="dueDateInput" name="dueDate" required/>
   </mat-form-field>
 
   <mat-checkbox [(ngModel)]="task.isCompleted" name="isCompleted">Completed</mat-checkbox>
@@ -26,7 +32,7 @@
       <mat-icon>arrow_back</mat-icon> Back to Task List
     </button>
 
-    <button mat-raised-button color="accent" type="submit">
+    <button mat-raised-button color="accent" type="submit" [disabled]="taskForm.invalid">
       <mat-icon>save</mat-icon> {{ isEditMode ? 'Update' : 'Save' }}
     </button>
   </div>
