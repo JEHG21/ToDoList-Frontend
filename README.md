@@ -1,4 +1,4 @@
-# ToDoListFrontend
+# To-Do List Frontend
 
 ## Overview
 This is the frontend for the To-Do List application, built using Angular. It provides user interfaces for user authentication, task management, and a responsive design using Angular Material.
