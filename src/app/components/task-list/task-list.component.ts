@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatTableModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatTableModule, MatIconModule, MatButtonModule, ConfirmDialogComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
   providers: []
@@ -20,7 +22,7 @@ export class TaskListComponent implements OnInit {
   displayedColumns: string[] = ['title', 'description', 'dueDate', 'isCompleted', 'actions'];
   loading: boolean = false;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getTasks();
@@ -41,15 +43,18 @@ export class TaskListComponent implements OnInit {
     );
   }
 
-  deleteTask(id: number): void {
-    const confirmDelete = confirm('Are you sure you want to delete this task?');
-    if (confirmDelete) {
-      this.taskService.deleteTask(id).subscribe(() => {
-        console.log('Task successfully deleted');
-        this.tasks = this.tasks.filter(task => task.taskId !== id);
-      }, error => {
-        console.error('Error deleting task:', error);
-      });
-    }
+  deleteTask(taskId: number): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.taskService.deleteTask(taskId).subscribe(() => {
+          console.log('Task successfully deleted');
+          this.tasks = this.tasks.filter(task => task.taskId !== taskId);
+        });
+      }
+    });
   }
 }
