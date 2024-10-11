@@ -1,16 +1,28 @@
-<h2>Add Task</h2>
-<form (ngSubmit)="onSubmit()">
-  <label for="title">Title:</label>
-  <input id="title" [(ngModel)]="task.title" name="title" required>
+<div class="task-form-header">
+  <h2>Add Task</h2>
+</div>
 
-  <label for="description">Description:</label>
-  <input id="description" [(ngModel)]="task.description" name="description" required>
+<form (ngSubmit)="onSubmit()" class="task-form">
 
-  <label for="dueDate">Due Date:</label>
-  <input id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" type="date" required>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="task.title" name="title" required>
+  </mat-form-field>
 
-  <label for="isCompleted">Completed:</label>
-  <input id="isCompleted" [(ngModel)]="task.isCompleted" name="isCompleted" type="checkbox">
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="task.description" name="description" required></textarea>
+  </mat-form-field>
 
-  <button type="submit">{{ isEditMode ? 'Update' : 'Save' }}</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Due Date</mat-label>
+    <input matInput id="dueDateInput" name="dueDate" required />
+ </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="task.isCompleted" name="isCompleted">Completed</mat-checkbox>
+
+  <button mat-raised-button color="primary" type="submit">
+    {{ isEditMode ? 'Update' : 'Save' }}
+  </button>
 </form>
+

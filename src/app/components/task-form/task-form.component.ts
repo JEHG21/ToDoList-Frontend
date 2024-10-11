@@ -3,11 +3,28 @@ import { TaskService } from '../../services/task.service';
 import { Router, ActivatedRoute } from '@angular/router'; 
 import { Task } from '../../models/task';
 import { FormsModule } from '@angular/forms'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';  
+import { MatInputModule } from '@angular/material/input'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
+
+import flatpickr from 'flatpickr';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [FormsModule],  
+  imports: [
+    CommonModule,
+    FormsModule, 
+    MatButtonModule, 
+    MatIconModule, 
+    MatTableModule, 
+    MatInputModule, 
+    MatFormFieldModule,
+    MatCheckboxModule,],  
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css'],
 })
@@ -20,7 +37,7 @@ export class TaskFormComponent implements OnInit {
     isCompleted: false,
   };
 
-  isEditMode = false;  
+  isEditMode = false;
 
   constructor(
     private taskService: TaskService, 
@@ -32,9 +49,11 @@ export class TaskFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');  
     if (id) {
       this.isEditMode = true;  
-      this.getTaskById(+id);   
+      this.getTaskById(+id); 
+    } else {
+      this.initializeFlatpickr();
     }
-  }
+  }    
 
   getTaskById(id: number): void {
     this.taskService.getTask(id).subscribe(
@@ -51,11 +70,23 @@ export class TaskFormComponent implements OnInit {
         this.task.title = task.title;
         this.task.description = task.description;
         this.task.isCompleted = task.isCompleted;
+
+        this.initializeFlatpickr();
       },
       (error) => {
         console.error('Error retrieving task:', error);
       }
     );
+  }
+
+  initializeFlatpickr(): void {
+    flatpickr('#dueDateInput', {
+      dateFormat: 'Y-m-d',
+      defaultDate: this.task.dueDate, 
+      onChange: (selectedDates, dateStr) => {
+        this.task.dueDate = dateStr;
+      },
+    });
   }
   
   onSubmit(): void {
