@@ -1,1 +1,39 @@
-<p>task-list works!</p>
+<h2>Task List</h2>
+
+<button [routerLink]="['/add-task']">Add Task</button>
+
+<div *ngIf="loading">
+    <p>Loading tasks...</p>
+  </div>
+  
+  <div *ngIf="!loading && tasks.length === 0">
+    <p>No tasks available.</p>
+  </div>
+  
+  <div *ngIf="!loading && tasks.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Completed</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.dueDate | date:'short' }}</td>
+          <td>{{ task.isCompleted ? 'Yes' : 'No' }}</td>
+          <td>
+            <button [routerLink]="['/edit-task', task.taskId]">Edit</button>
+            <button [routerLink]="['/task', task.taskId]">Details</button>
+            <button (click)="deleteTask(task.taskId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

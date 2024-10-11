@@ -1,1 +1,16 @@
-<p>task-form works!</p>
+<h2>Add Task</h2>
+<form (ngSubmit)="onSubmit()">
+  <label for="title">Title:</label>
+  <input id="title" [(ngModel)]="task.title" name="title" required>
+
+  <label for="description">Description:</label>
+  <input id="description" [(ngModel)]="task.description" name="description" required>
+
+  <label for="dueDate">Due Date:</label>
+  <input id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" type="date" required>
+
+  <label for="isCompleted">Completed:</label>
+  <input id="isCompleted" [(ngModel)]="task.isCompleted" name="isCompleted" type="checkbox">
+
+  <button type="submit">{{ isEditMode ? 'Update' : 'Save' }}</button>
+</form>

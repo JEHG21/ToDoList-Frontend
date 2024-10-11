@@ -4,17 +4,9 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 export const routes: Routes = [
-  { 
-    path: '', 
-    component: TaskListComponent },
-  { 
-    path: 'add-task', 
-    component: TaskFormComponent },
-  { 
-    path: 'task/:id', 
-    component: TaskDetailsComponent },
-  { 
-    path: 'edit-task/:id', 
-    component: TaskFormComponent }
-];
+    { path: '', component: TaskListComponent },
+    { path: 'add-task', component: TaskFormComponent },
+    { path: 'task/:id', component: TaskDetailsComponent },
+    { path: 'edit-task/:id', component: TaskFormComponent }
+  ];
 
